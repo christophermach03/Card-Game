@@ -47,6 +47,15 @@ public class GameStack {
         this.StackCounter++;
     }
     
+    public Card GetCardWithStackId(int stackIdToFind){
+        for (Card c : this.current_stack){
+            if (c.stackId == stackIdToFind){
+                return c;
+            }
+        }
+        return null;
+    }
+    
     /**
      * Adds a card to stack, checks for responses, then begins resolving the
      * cards. It does this by popping them, then calling their play method.
@@ -55,8 +64,16 @@ public class GameStack {
      * @param addedCard 
      */
     public void AddToStack(Card addedCard){
+        //gives card a stack counter
+        this.AssignStackCounter(addedCard);
+        //then adds it to the stack (push)
         current_stack.push(addedCard);
-        CheckForResponses("others");
+        
+        //DOESNT DO ANYTHING, WILL DELETE LATER
+        //CheckForResponses("others");
+        
+        //checks if valid, if true then plays card and removes it from the stack.
+        //If not, it just removes it
         if(addedCard.CheckValid()==true){
             current_stack.pop().Play(this);
         }

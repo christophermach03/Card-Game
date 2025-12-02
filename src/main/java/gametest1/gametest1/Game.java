@@ -20,6 +20,7 @@ public class Game {
         this.playerList = playerList = new ArrayList<Player>();
         this.currentDeck = new Deck(50);
         this.currentStack = new GameStack(playerList, currentDeck);
+        
         Card tempcard1 = new CardType01Shuffle();
         Card tempcard2 = new CardType02Nope();
         Card tempcard3 = new CardType00ExplodingDog();
@@ -71,7 +72,9 @@ public class Game {
     }
     
     public void CheckforWinLoss(){
-        
+        for (Player p : this.playerList){
+            
+        }
     }
     public static void main(String[] args) {
         //All this stuff down here is just being used for testing.

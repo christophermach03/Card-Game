@@ -36,6 +36,15 @@ public class Hand {
         }
     }
     
+    public Boolean CheckCardById (int cardId){
+        for (Card c : hand){
+            if (c.cardId == cardId){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     /**
      * Will be used to sort the hand in order of card IDs.
      */

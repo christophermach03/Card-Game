@@ -16,6 +16,7 @@ public class Player {
         Game currentGame;
         GameStack currentStack;
         
+        Boolean lost = false;
         
     public Player(String name, Integer id){
         this.playerName = name;
@@ -41,6 +42,10 @@ public class Player {
         currentHand.RemoveCardById(removedCardId);
     }
     
+    public Boolean CheckCardInHandById(Integer cardId){
+        return (this.currentHand.CheckCardById(cardId));
+    }
+    
     /**
      * Plays a card with extra steps.
      * @param playedCard 
@@ -53,7 +58,7 @@ public class Player {
          * 4. Stack does its thing
          */
         //TEST THIS!!!!!
-        if(playedCard.ConfirmTargets(currentStack)){
+        if(playedCard.ConfirmTargetPlayer(currentStack)){
             RemoveCardFromHandById(playedCard.cardId);
             currentStack.AddToStack(playedCard);
         }
@@ -79,6 +84,14 @@ public class Player {
      */
     public void TakeTurn(){
         //do this next!!!!
+    }
+    
+    public Boolean CheckForLoss(){
+        return this.lost;
+    }
+    
+    public void MakeLose(){
+        this.lost = true;
     }
     
     @Override

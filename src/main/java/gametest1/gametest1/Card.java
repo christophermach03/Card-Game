@@ -14,12 +14,14 @@ public class Card {
     Integer cardId; //Card IDs are hard coded integers assigned to certain cards in an arbitrary order.
     //Used as an easy way to identify if a card is a certain card type or not.
     
+    Player owner;
     Boolean valid; //Whether or not the card is valid
+    
     Boolean needsTarget; //Whether or not the card needs a target.
     String targetType; //Targets can only be Player or Card
-    ArrayList<Integer> currentTargetIds; //stoes the stack id of target cards
-    ArrayList<Integer> strictTargetTypes; //A list of cardIDs, if the card can only target certain types of cards.
-    ArrayList<Integer> strictTargetExclusions; //A list of cardIDs, if the card cant target certain types of cards.
+    ArrayList<Integer> currentTargetStackIds; //stoes the stack id of target cards
+    ArrayList<Player> currentTargetPlayers;// stores a reference to any players being affected by the card effect.
+    
     Boolean canRespond; //Whether or not this card is capable of responding
     Integer stackId; //The stack ID of this card, is assigned when it is put onto the stack. Currently unimplemented
     
@@ -27,7 +29,7 @@ public class Card {
     public Card(){
        this.valid =  true;
        this.stackId=0;
-       this.currentTargetIds = new ArrayList<>();
+       this.currentTargetStackIds = new ArrayList<>();
     }
     
     
@@ -38,40 +40,17 @@ public class Card {
      * @param stack
      * @return 
      */
-    public Boolean ConfirmTargets(GameStack stack){
-                
-        Scanner input = new Scanner(System.in);        
-        if(targetType.toLowerCase().equals("card")){
-            while(true){
-                System.out.println(stack);
-                System.out.println("Give stack id of desired target!"
-                        + " Or type 0 to return!");
-                int targetId = input.nextInt();
-                if(this.strictTargetExclusions.contains(targetId)){
-                    System.out.println("Card is invalid target!");
-                }
-                else if(targetId == 0){
-                    return false;
-                }
-                else{
-                    //NEEDS A TRY CATCH STATEMENT HERE!!!!!!!!!!!
-                    this.currentTargetIds.add(targetId);
-                    return true;
-                }
-                
-            }
-            
-        }
-        else if(targetType.toLowerCase().equals("player")){
-            //put some code here!
+    public Boolean ConfirmTargetPlayer(GameStack stack){
+        if(this.needsTarget == false){
+            return true;
         }
         else{
-            throw new IllegalArgumentException("Card "+this.cardName+" was not"
-                    + " set up properly. Needs a target type!");
+            //show a list of the other players to the Owner
+            //prompts a selection for the effect.
+            //Adds that player to currentTargetPlayers
+            
+            return true;//temp for now
         }
-        //null should never actually be returned. If it is, there is a bug
-        //somewhere
-        return null;
     }
     
     
@@ -85,7 +64,7 @@ public class Card {
     
     /**
      * Used to make the card valid or invalid, used by the Nope card to cancel
-     * the effect of another card. If a card is njot valid, the stack will not
+     * the effect of another card. If a card is not valid, the stack will not
      * call its play method.
      * @param value 
      */
@@ -97,7 +76,7 @@ public class Card {
      * Removes all targets from the card, used in the refresh method.
      */
     public void ClearTargets(){
-        this.currentTargetIds.clear();
+        this.currentTargetStackIds.clear();
     }
     
     /**
@@ -132,6 +111,14 @@ public class Card {
      */
     public int GetStackId(){
         return this.stackId;
+    }
+    
+    public void SetOwner(Player player){
+        this.owner = player;
+    }
+    
+    public Player GetOwner(){
+        return this.owner;
     }
     
     @Override
