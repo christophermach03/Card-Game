@@ -10,9 +10,9 @@ import java.util.*;
  * @author chris
  */
 public class GameStack {
-    private Stack<Card> current_stack;
-    private ArrayList<Player> playerList;
-    private Deck current_deck;
+    private final Stack<Card> current_stack;
+    private final ArrayList<Player> playerList;
+    private final Deck current_deck;
     int StackCounter;
     
     public GameStack(ArrayList playerListRef, Deck deck){
@@ -28,7 +28,7 @@ public class GameStack {
     }
     
     /**
-     * Only use for testing purposes, adds a card but doesnt remove it
+     * Only use for testing purposes, adds a card but doesn't remove it
      * @param testCard 
      */
     public void TestAdd(Card testCard){
@@ -47,19 +47,6 @@ public class GameStack {
         this.StackCounter++;
     }
     
-    public Card GetCardWithStackId(int stackIdToFind){
-        for (Card c : this.current_stack){
-            if (c.stackId == stackIdToFind){
-                return c;
-            }
-        }
-        return null;
-    }
-    
-    public Deck GetCurrentDeck(){
-        return this.current_deck;
-    }
-    
     /**
      * Adds a card to stack, checks for responses, then begins resolving the
      * cards. It does this by popping them, then calling their play method.
@@ -68,16 +55,8 @@ public class GameStack {
      * @param addedCard 
      */
     public void AddToStack(Card addedCard){
-        //gives card a stack counter
-        this.AssignStackCounter(addedCard);
-        //then adds it to the stack (push)
         current_stack.push(addedCard);
-        
-        //DOESNT DO ANYTHING, WILL DELETE LATER
-        //CheckForResponses("others");
-        
-        //checks if valid, if true then plays card and removes it from the stack.
-        //If not, it just removes it
+        CheckForResponses("others");
         if(addedCard.CheckValid()==true){
             current_stack.pop().Play(this);
         }
@@ -127,6 +106,4 @@ public class GameStack {
             sb.append(card.toString());
         }
         return sb.toString();
-    }
-
-}
+    }}
