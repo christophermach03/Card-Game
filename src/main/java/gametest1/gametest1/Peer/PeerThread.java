@@ -5,7 +5,6 @@
 package gametest1.gametest1.Peer;
 import java.io.*;
 import java.net.*;
-import javax.json.*;
 
 /**
  *
@@ -24,16 +23,12 @@ public class PeerThread extends Thread {
 
         while (flag) {
             try {
-                JsonObject jsonObject = Json.createReader(bufferedReader).readObject();
-
-                if (jsonObject.containsKey("username")) {
-                    System.out.println("[" + jsonObject.getString("username") + "]: "
-                            + jsonObject.getString("message"));
-                }
-
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    System.out.println(line); 
+            }
             } catch (Exception e) {
-                flag = false;
-                interrupt();
+               interrupt();
             }
         }
     }
