@@ -22,4 +22,5 @@ public class CardType00ExplodingDog extends Card{
         }
         this.owner.MakeLose();
     }
+    
 }

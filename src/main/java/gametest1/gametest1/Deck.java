@@ -104,6 +104,22 @@ public class Deck {
         return null;
     }
     
+    public String serialize(){
+        StringBuilder s = new StringBuilder();
+        for (Card c : deck){
+            s.append(c.serialize()).append(",");
+        }
+        return s.toString();
+    }
+    
+    public void deserialize(String data){
+        deck.clear();
+        for (String s : data.split(",")){
+            if (s.isEmpty()) continue;
+            deck.add(Card.fromString(s));
+        }
+    }
+    
     @Override
     public String toString() {
         return ("Exploding Dog Cards: "+CheckDeckForCardId(0)+", "+

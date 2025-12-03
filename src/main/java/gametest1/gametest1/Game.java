@@ -31,9 +31,12 @@ public class Game {
         //this.currentStack.TestAdd(tempcard3);
         //System.out.println(this.currentStack);
     }
-    /**
-     * Creates the players, adds them to the list.
-     */
+    
+    public void addPlayer(int id) {
+        System.out.println("Game: Adding Player " + id);
+        playerList.add(new Player("Player" + id, id));
+    }
+    
     public void Setup(){
         Scanner input = new Scanner(System.in);
         
@@ -61,6 +64,17 @@ public class Game {
     
     public void GiveHandsToPlayers(){
         
+    }
+    
+    public void giveCardToPlayer(int playerId, Card c) {
+        for (Player p : playerList) {
+            if (p.playerId == playerId) {
+                p.AddCardToHand(c);
+                System.out.println("Gave card to Player " + playerId);
+                return;
+            }
+        }
+        System.out.println("No such player: " + playerId);
     }
     
     public void TakeRound(){

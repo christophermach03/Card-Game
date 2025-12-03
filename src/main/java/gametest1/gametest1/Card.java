@@ -59,7 +59,7 @@ public class Card {
      * @param stack 
      */
     public void Play(GameStack stack){
-        System.out.println(cardName+" played!");
+        System.out.println("played card ");
     }
     
     /**
@@ -119,6 +119,38 @@ public class Card {
     
     public Player GetOwner(){
         return this.owner;
+    }
+    
+    public int getCardId(){
+        return cardId;
+    }
+    
+    public String serialize() {
+        return Integer.toString(cardId);
+    }
+    
+    public static Card fromString(String s){
+        int newS = Integer.parseInt(s);
+        switch(newS){
+            case 0:
+                return new CardType00ExplodingDog();
+            case 1:
+                return new CardType01Shuffle();
+            case 2:
+                return new CardType02Nope();
+            case 3:
+                return new CardType03Defuse();
+            case 4:
+                return new CardType04Skip();
+            case 5:
+                return new CardType05Favor();
+            case 6:
+                return new CardType06Attack();
+            case 7:
+                return new CardType07Future();
+            default:
+                throw new IllegalArgumentException("Unkown card Id "+newS);
+        }
     }
     
     @Override
