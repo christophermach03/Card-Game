@@ -13,4 +13,9 @@ public class CardType01Shuffle extends Card {
         this.cardId=1;
         this.cardDescription="Shuffles the deck and stuff.";
     }
+    
+    @Override
+    public void Play(GameStack stack){
+        stack.GetCurrentDeck().Shuffle();
+    }
 }
