@@ -86,6 +86,10 @@ public class Player {
         //do this next!!!!
     }
     
+    public String getPlayerName(){
+        return playerName;
+    }
+    
     public Boolean CheckForLoss(){
         return this.lost;
     }

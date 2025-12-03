@@ -30,6 +30,10 @@ public class HandPanel extends JPanel implements GameObserver {
         setOpaque(false);
         setPreferredSize(new Dimension(1200, 95));
     }
+    
+    public String getOwnerId(){
+        return ownerId;
+    }
 
     public void addCard(CardSprite sprite) {
         CardPanel cp = new CardPanel(sprite, ownerId, subject);

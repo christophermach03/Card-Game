@@ -29,12 +29,6 @@ public class CardType02Nope extends Card{
     
     @Override
     public void Play(GameStack stack){
-        //get card with previos stack id
-        //if no card exists, card fails
-        //sets card to not valid
-        Card c = stack.GetCardWithStackId(this.stackId-1);
-        if (c != null){
-            c.valid=false;
-        }
+        System.out.println("Nothing!");
     }
 }

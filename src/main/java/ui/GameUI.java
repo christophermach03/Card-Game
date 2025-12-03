@@ -10,6 +10,7 @@ package ui;
  */
 
 import observers.*;
+import gametest1.gametest1.*;
 import javax.swing.*;
 import java.awt.*;
 
@@ -17,41 +18,46 @@ public class GameUI extends JFrame implements GameObserver {
 
     private HandPanel p1, p2, p3, p4;
     private JLabel turnLabel;
-    private DummyTurnManager turnManager;
-
     private DeckPanel deck;
     private GameSubject subject;
 
-    public GameUI() {
+    private NetworkManager network;
+    private NetworkController controller;
+    private Player localPlayer;
+
+    
+    public GameUI(NetworkManager network, Player player) {
+        this.network = network;
+        this.localPlayer = player;
+        this.controller = new NetworkController(network);
 
         subject = new GameSubject();
         subject.addObserver(this);
 
-        turnManager = new DummyTurnManager(subject);
-        DummyClock clock = new DummyClock(subject);
-
-        setTitle("Card Game UI");
+        setTitle("Card Game UI - " + player.getPlayerName());
         setSize(1300, 900);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-        
-        // DECK PNG
-        ImageIcon backIcon =
-                new ImageIcon(getClass().getResource("/assets/cards/backCard.png"));
 
-        deck = new DeckPanel(backIcon.getImage());
-        deck.setPreferredSize(new Dimension(136, 182));
+        setupTopBar();
+        setupHands();
 
-        // TOP BAR 
+        setVisible(true);
+
+        // If dealer, setup initial deck & hands
+        if (network.isAuthorizedUser()) {
+            Game.getInstance().setupDeck();
+            Game.getInstance().playerList.forEach(Game.getInstance()::giveHandToPlayer);
+        }
+    }
+    
+    private void setupTopBar() {
         JPanel topBar = new JPanel(new BorderLayout());
         topBar.setOpaque(true);
         topBar.setBackground(new Color(230, 230, 230));
-
-        // deck height
         topBar.setPreferredSize(new Dimension(1300, 192));
 
-        //TURN LABEL
-        turnLabel = new JLabel("Turn: P1");
+        turnLabel = new JLabel("Turn: " + localPlayer.getPlayerName());
         turnLabel.setFont(new Font("Arial", Font.BOLD, 24));
         turnLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -61,32 +67,23 @@ public class GameUI extends JFrame implements GameObserver {
 
         JButton drawBtn = new JButton("Draw Card");
         drawBtn.setFont(new Font("Arial", Font.BOLD, 16));
-
-        drawBtn.addActionListener(e -> {
-            subject.notifyAll(
-                new GameEvent(GameEvent.Type.DRAW_REQUESTED, null)
-            );
-        });
+        drawBtn.addActionListener(e -> controller.requestDrawCard(localPlayer));
 
         leftPanel.add(drawBtn);
         topBar.add(leftPanel, BorderLayout.WEST);
 
-        // DECK
-        JPanel deckCenterPanel = new JPanel(new GridBagLayout());
-        deckCenterPanel.setOpaque(false);
-        deckCenterPanel.add(deck);
-        topBar.add(deckCenterPanel, BorderLayout.CENTER);
-
-        //CLOCK
-        JPanel clockPanel = new JPanel();
-        clockPanel.setPreferredSize(new Dimension(60, 60));
-        clockPanel.setBackground(Color.BLACK);
-        clockPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
-        topBar.add(clockPanel, BorderLayout.EAST);
+        ImageIcon backIcon =
+                new ImageIcon(getClass().getResource("/assets/cards/backCard.png"));
+        deck = new DeckPanel(backIcon.getImage());
+        JPanel center = new JPanel(new GridBagLayout());
+        center.setOpaque(false);
+        center.add(deck);
+        topBar.add(center, BorderLayout.CENTER);
 
         add(topBar, BorderLayout.NORTH);
-
-        // HANDS
+    }
+    
+    private void setupHands() {
         p1 = new HandPanel("P1", subject);
         p2 = new HandPanel("P2", subject);
         p3 = new HandPanel("P3", subject);
@@ -102,14 +99,8 @@ public class GameUI extends JFrame implements GameObserver {
         hands.add(wrapWithLabel("P4", p4));
 
         add(hands, BorderLayout.CENTER);
-
-        setVisible(true);
-
-        SwingUtilities.invokeLater(() -> new DummyHandFiller().giveHands(subject));
-
-        turnManager.nextTurn();
     }
-
+    
     private JPanel wrapWithLabel(String label, HandPanel hand) {
         JPanel panel = new JPanel(new BorderLayout());
         JLabel text = new JLabel(label + ": ");
@@ -121,33 +112,33 @@ public class GameUI extends JFrame implements GameObserver {
 
     @Override
     public void onNotify(GameEvent event) {
-
         switch (event.type) {
+            case CARD_DEALT:
+                Object[] data = (Object[]) event.data;
+                String playerName = (String) data[0];
+                CardSprite sprite = (CardSprite) data[1];
+
+                if (playerName.equals(localPlayer.getPlayerName())) {
+                    // Add card visually to hand
+                    if (p1.getOwnerId().equals(playerName)) p1.addCard(sprite);
+                    if (p1.getOwnerId().equals(playerName)) p2.addCard(sprite);
+                    if (p1.getOwnerId().equals(playerName)) p3.addCard(sprite);
+                    if (p1.getOwnerId().equals(playerName)) p4.addCard(sprite);
+                }
+                break;
 
             case TURN_CHANGED:
                 String player = (String) event.data;
                 turnLabel.setText("Turn: " + player);
-
                 p1.setHighlighted(player.equals("P1"));
                 p2.setHighlighted(player.equals("P2"));
                 p3.setHighlighted(player.equals("P3"));
                 p4.setHighlighted(player.equals("P4"));
                 break;
-
-            case CARD_PLAYED:
-                Object[] arr = (Object[]) event.data;
-                CardSprite sprite = (CardSprite) arr[1];
-                deck.updateDeckImage(sprite.icon.getImage());
-                break;
-
-            // You don't need a block here for DRAW_REQUESTED.
-            // Your controller handles it, NOT the UI.
         }
     }
+    
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(GameUI::new);
-    }
 }
 
 
