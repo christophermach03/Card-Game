@@ -6,12 +6,17 @@ package gametest1.gametest1;
 
 /**
  *
- * @author chris
+ * @author Gianni
  */
 public class CardType06Attack extends Card{
     public CardType06Attack(){
         this.cardName="Attack";
         this.cardId=6;
         this.cardDescription="Don't draw any cards, forces the player to take two turns.";
+    }
+    public void resolve(Game game, Player user) {
+        System.out.println(user.playerName + " played ATTACK!");
+        game.forceNextPlayerTurns(2);
+        game.endCurrentPlayerTurn();
     }
 }
