@@ -56,6 +56,10 @@ public class GameStack {
         return null;
     }
     
+    public Deck GetCurrentDeck(){
+        return this.current_deck;
+    }
+    
     /**
      * Adds a card to stack, checks for responses, then begins resolving the
      * cards. It does this by popping them, then calling their play method.
@@ -124,4 +128,5 @@ public class GameStack {
         }
         return sb.toString();
     }
+
 }

@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package gametest1.gametest1;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -24,6 +25,10 @@ public class Deck {
      */
     public void Initialize(){
     
+    }
+    
+    public void Shuffle(){
+        Collections.shuffle(deck);
     }
     
     /**
