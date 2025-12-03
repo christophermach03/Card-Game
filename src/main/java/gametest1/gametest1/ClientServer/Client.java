@@ -33,8 +33,8 @@ public class Client {
 
         // Send messages to server
         while (true) {
-            String msg = userIn.readLine();
-            serverOut.println(msg);
+            String msg = userIn.readLine(); //USER INPUT
+            serverOut.println(msg);//send it to server
         }
     }
 }
