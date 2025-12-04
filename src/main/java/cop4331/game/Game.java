@@ -38,12 +38,12 @@ public class Game {
     }
     
     public void AssembleDeck(){
-        this.currentDeck.AddAttackCard(00);
-        this.currentDeck.AddDefuseCard(0);
-        this.currentDeck.AddFutureCard(12);
-        this.currentDeck.AddShuffleCard(0);
-        this.currentDeck.AddSkipCard(0);
-        this.currentDeck.AddFavorCard(0);
+        this.currentDeck.AddAttackCard(0);
+        this.currentDeck.AddDefuseCard(3);
+        this.currentDeck.AddFutureCard(4);
+        this.currentDeck.AddShuffleCard(4);
+        this.currentDeck.AddSkipCard(4);
+        this.currentDeck.AddFavorCard(4);
         this.currentDeck.Shuffle();
     }
     
@@ -130,6 +130,8 @@ public class Game {
     }
     
     public void takeTurn(int playerId, String msg) {
+        //check for skip before draws, then clear
+        
         if (gameOver) {
             server.sendToPlayer(playerId, "The game is over!");
             return;
@@ -154,8 +156,16 @@ public class Game {
         // Passing
         if (cardId == 0){
             server.sendToPlayer(playerId, "You passed the turn.");
+            
             //draw a new card
-            p.DrawCard(currentDeck);
+            if (p.skipped) {
+                server.sendToPlayer(playerId, "You are skipped this turn and do not draw a card.");
+                p.skipped = false; // reset skip for next turn
+            } else {
+                // draw a new card normally
+                p.DrawCard(currentDeck);
+            }
+            
             server.sendToPlayer(playerId, "Updated hand: ");
             sendHandToActivePlayer();
             
@@ -195,7 +205,14 @@ public class Game {
         server.sendToPlayer(playerId, "You played: "+ cardToPlay.cardName);
         
         //draw a new card after playing
-        p.DrawCard(currentDeck);
+        if (p.skipped) {
+            server.sendToPlayer(playerId, "You are skipped this turn and do not draw a card.");
+            p.skipped = false; // reset skip for next turn
+        } else {
+            // draw a new card normally
+            p.DrawCard(currentDeck);
+        }
+        
         server.sendToPlayer(playerId, "Updated hand: ");
         sendHandToActivePlayer();
         

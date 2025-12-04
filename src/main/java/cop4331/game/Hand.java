@@ -38,6 +38,13 @@ public class Hand {
         }
     }
     
+    public Card GiveUpCardByIndex(int i){
+        Card card = hand.get(i);
+        hand.remove(i);
+        
+        return card;
+    }
+    
     public Card GetCardById(int cardIdToFind){
         for (Card c : hand){
             if (c.cardId == cardIdToFind) return c;

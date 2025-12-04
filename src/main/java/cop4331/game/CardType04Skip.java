@@ -6,12 +6,18 @@ package cop4331.game;
 
 /**
  *
- * @author chris
+ * @author Gianni, chris
  */
 public class CardType04Skip extends Card{
     public CardType04Skip(){
         this.cardName="Skip";
         this.cardId=4;
         this.cardDescription="You dont have to draw a card!";
+    }
+    
+    @Override
+    public void Play(GameStack stack) {
+        this.owner.skipped=true;
+        this.owner.currentGame.server.broadcast(this.owner.playerName + " skipped their draw!");
     }
 }

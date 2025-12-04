@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package cop4331.game;
+import java.util.*;
 
 /**
  *
@@ -18,7 +19,7 @@ public class Player {
         
         Boolean lost = false;
         
-        Boolean skipcard = false;
+        Boolean skipped = false;
         int extraTurns = 0;
         
     public Player(String name, Integer id){
@@ -35,6 +36,32 @@ public class Player {
      */
     public void AddCardToHand(Card addedCard){
         currentHand.AddCard(addedCard);
+    }
+    
+    public void ClearSkip(){
+        this.skipped = false;
+    }
+    
+    public void Attacked(){
+        this.extraTurns=this.extraTurns+2;
+    }
+    
+    public void ExtraTurnTickDown(){
+        if(this.extraTurns > 0){
+            extraTurns--;
+        }
+    }
+    
+    public Card GiveUpRandomCard(){
+        LinkedList<Card> handCards = currentHand.getHand();
+        if (handCards.size() == 0) {
+            return null;
+        }
+
+        int randomIndex = new Random().nextInt(handCards.size());
+        Card givenCard = currentHand.GiveUpCardByIndex(randomIndex);
+
+        return givenCard;
     }
     
     /**
