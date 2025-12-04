@@ -1,7 +1,5 @@
 cop4331\game\CardType02Nope.class
 cop4331\game\ClientHandler.class
-cop4331\server\Client.class
-cop4331\game\Launcher.class
 cop4331\game\CardType05Favor.class
 ui\DummyCardMapper.class
 cop4331\game\CardType00ExplodingDog.class

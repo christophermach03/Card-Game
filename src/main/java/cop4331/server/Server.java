@@ -26,9 +26,20 @@ public class Server {
     public Server(int port) throws IOException {
         serverSocket = new ServerSocket(port);
         System.out.println("Server started on port " + port);
-        
-        //creates the game isntance
+
         this.game = new Game(this);
+
+        // Ensure the server socket is closed when the JVM exits
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                System.out.println("Shutting down server...");
+                if (!serverSocket.isClosed()) {
+                    serverSocket.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }));
     }
     
     public void registerPlayerConnection(int playerId, ClientHandler handler){
