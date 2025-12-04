@@ -1,0 +1,44 @@
+-J-Duser.language=
+-J-Duser.country=
+@options
+@packages
+--no-fonts
+-encoding
+'UTF-8'
+-protected
+--release
+24
+-sourcepath
+'C:/Users/chris/Desktop/ExplodingPuppiesMaster/Card-Game/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2025. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/chris/Desktop/ExplodingPuppiesMaster/Card-Game/target/reports/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'ExplodingPuppiesServer 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'ExplodingPuppiesServer 1.0-SNAPSHOT API'
+cop4331.game
+cop4331.server
+C:\Users\chris\Desktop\ExplodingPuppiesMaster\Card-Game\src\main\java = 1764820990440
+C:\Users\chris\Desktop\ExplodingPuppiesMaster\Card-Game\target\reports\apidocs\allclasses-index.html = 1764822082979
+C:\Users\chris\Desktop\ExplodingPuppiesMaster\Card-Game\target\reports\apidocs\allpackages-index.html = 1764822082983
+C:\Users\chris\Desktop\ExplodingPuppiesMaster\Card-Game\target\reports\apidocs\element-list = 1764822082782
+C:\Users\chris\Desktop\ExplodingPuppiesMaster\Card-Game\target\reports\apidocs\help-doc.html = 1764822083035
+C:\Users\chris\Desktop\ExplodingPuppiesMaster\Card-Game\target\reports\apidocs\index-all.html = 1764822083023
+C:\Users\chris\Desktop\ExplodingPuppiesMaster\Card-Game\target\reports\apidocs\index.html = 1764822082955
+C:\Users\chris\Desktop\ExplodingPuppiesMaster\Card-Game\target\reports\apidocs\member-search-index.js = 1764822082995
+C:\Users\chris\Desktop\ExplodingPuppiesMaster\Card-Game\target\reports\apidocs\module-search-index.js = 1764822082986
+C:\Users\chris\Desktop\ExplodingPuppiesMaster\Card-Game\target\reports\apidocs\overview-summary.html = 1764822083030
+C:\Users\chris\Desktop\ExplodingPuppiesMaster\Card-Game\target\reports\apidocs\overview-tree.html = 1764822082948
+C:\Users\chris\Desktop\ExplodingPuppiesMaster\Card-Game\target\reports\apidocs\package-search-index.js = 1764822082989
+C:\Users\chris\Desktop\ExplodingPuppiesMaster\Card-Game\target\reports\apidocs\search.html = 1764822083026
+C:\Users\chris\Desktop\ExplodingPuppiesMaster\Card-Game\target\reports\apidocs\tag-search-index.js = 1764822083000
+C:\Users\chris\Desktop\ExplodingPuppiesMaster\Card-Game\target\reports\apidocs\type-search-index.js = 1764822082992
